@@ -1,18 +1,29 @@
 import Input from "@/components/Input";
 import Image from "next/image";
+import axios from "axios";
 import { useCallback, useState } from "react";
-import MdEmail from 'react-icons/md'
+import Mdemail from 'react-icons/md'
 
 const Auth = () => {
-    const[emailValue, setEmailValue]= useState("");
-    const[usernameValue, setUsernameValue]= useState("");
-    const[passwordValue, setPasswordValue]= useState("");
+    const[email, setEmailValue]= useState("");
+    const[name, setNameValue]= useState("");
+    const[password, setPasswordValue]= useState("");
 
     const[variant, setVariant] = useState('login');
 
     const toggleVariant= useCallback(()=>{
         setVariant((currentVariant) => currentVariant == 'login' ? 'register': 'login')
     }, [])
+
+    const register = useCallback(async() => {
+        try {
+            await axios.post('/api/register',{
+                name, email, password
+            });
+        } catch (error) {
+            console.log(error)
+        }
+    }, [email, password, name]);
 
     return ( 
         <div className="h-full w-full relative bg-[url('/images/hero.jpg')]
@@ -33,22 +44,22 @@ const Auth = () => {
                                     label="Username"
                                     id="username"
                                     type="username"
-                                    onChange={(ev: any)=>setUsernameValue(ev.target.value)}
-                                    value={usernameValue}
+                                    onChange={(ev: any)=>setNameValue(ev.target.value)}
+                                    value={name}
                                     // prefix={()=>{
-                                    //     return <MdEmail size={20} className="text-headline absolute top-5 left-2" />
+                                    //     return <Mdemail size={20} className="text-headline absolute top-5 left-2" />
                                     // }}
                                 />
                             )}
 
                             <Input
-                                label="Email"
+                                label="email"
                                 id="email"
                                 type="email"
                                 onChange={(ev: any)=>setEmailValue(ev.target.value)}
-                                value={emailValue}
+                                value={email}
                                 // prefix={()=>{
-                                //     return <MdEmail size={20} className="text-headline absolute top-5 left-2" />
+                                //     return <Mdemail size={20} className="text-headline absolute top-5 left-2" />
                                 // }}
                             />
                             <Input
@@ -56,15 +67,16 @@ const Auth = () => {
                                 id="password"
                                 type="password"
                                 onChange={(ev: any)=>setPasswordValue(ev.target.value)}
-                                value={passwordValue}
+                                value={password}
                                 // prefix={()=>{
-                                //     return <MdEmail size={20} className="text-headline absolute top-5 left-2" />
+                                //     return <Mdemail size={20} className="text-headline absolute top-5 left-2" />
                                 // }}
                             />
                         </div>
 
-                        <button className="bg-headline text-primary hover:bg-paragraph rounded-md mt-10 w-full py-3 transition">
-                           {variant == 'register' ? 'Create Account': 'Log in'}
+                        <button onClick={register}
+                        className="bg-headline text-primary hover:bg-paragraph rounded-md mt-10 w-full py-3 transition">
+                           {variant == 'login' ? 'Log in' :'Create Account'}
                         </button>
                         <p className="text-paragraph mt-12 text-center">
                         {variant == 'login' ? 'New to PinkFlix?': 'Already have an account?'}
