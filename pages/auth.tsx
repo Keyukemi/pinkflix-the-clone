@@ -1,10 +1,16 @@
 import Input from "@/components/Input";
-import Image from "next/image";
 import axios from "axios";
 import { useCallback, useState } from "react";
-import Mdemail from 'react-icons/md'
+import {signIn} from 'next-auth/react'
+import { useRouter } from "next/router";
+
+import {FcGoogle} from 'react-icons/fc'
+import Image from "next/image";
+import Mdemail from 'react-icons/md';
+
 
 const Auth = () => {
+    const router = useRouter();
     const[email, setEmailValue]= useState("");
     const[name, setNameValue]= useState("");
     const[password, setPasswordValue]= useState("");
@@ -15,20 +21,37 @@ const Auth = () => {
         setVariant((currentVariant) => currentVariant == 'login' ? 'register': 'login')
     }, [])
 
+    const login = useCallback(async()=>{
+        try {
+            await signIn('credentials',{
+                email, 
+                password,
+                redirect: false,
+                callbackUrl:'/'
+            });
+            router.push('/')
+        } catch (error) {
+            console.log(error)
+        }
+    },[email, password, router])
+
     const register = useCallback(async() => {
         try {
             await axios.post('/api/register',{
                 name, email, password
             });
+            login();
         } catch (error) {
             console.log(error)
         }
-    }, [email, password, name]);
+    }, [email, password, name, login]);
+
+
 
     return ( 
         <div className="h-full w-full relative bg-[url('/images/hero.jpg')]
             bg-no-repeat bg-center bg-fixed bg-cover ">
-            <div className="bg-headline w-full h-full lg:bg-opacity-80">
+             <div className="bg-headline w-full h-full lg:bg-opacity-80">
                 <nav className="px-12 py-5">
                     <img src="/images/PinkFlix(c).png" alt="PinkFlix Logo" className="h-24" />
                 </nav>
@@ -74,7 +97,7 @@ const Auth = () => {
                             />
                         </div>
 
-                        <button onClick={register}
+                        <button onClick={variant == 'login' ? login: register}
                         className="bg-headline text-primary hover:bg-paragraph rounded-md mt-10 w-full py-3 transition">
                            {variant == 'login' ? 'Log in' :'Create Account'}
                         </button>
