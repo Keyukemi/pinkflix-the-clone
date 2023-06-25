@@ -8,7 +8,7 @@ interface InputProps{
     required?: boolean;
     value: string;
     onChange: any;
-    prefix?: () => React.ReactNode;
+    iconPrefix?: () => React.ReactNode;
     //register: UseFormRegister<FieldValues>,
     errors?: FieldErrors
    //disabled?: boolean;
@@ -19,8 +19,8 @@ const Input = (props: InputHTMLAttributes<HTMLInputElement> & InputProps) => {
     return ( 
         <div className="relative">
             {
-                props.prefix && (
-                    props.prefix()
+                props.iconPrefix && (
+                    props.iconPrefix()
                 )
             }
             <input 
@@ -28,7 +28,7 @@ const Input = (props: InputHTMLAttributes<HTMLInputElement> & InputProps) => {
                     className={`
                     block rounded-md w-full px-6 pt-6 pb-1 text-md text-paragraph peer
                     appearance-none focus:outline-none focus:ring-0 bg-primary
-                    ${props.prefix? 'pl-9' : 'pl-4'} 
+                    ${props.iconPrefix? 'pl-9' : 'pl-4'} 
                     ${props.errors? 'border-rose-500' : 'border-neutral-300'}
                     ${props.errors? 'focus:border-rose-500' : 'focus:border-black'}
                     `}
@@ -39,7 +39,7 @@ const Input = (props: InputHTMLAttributes<HTMLInputElement> & InputProps) => {
                 -translate-y-3 top-4 z-10 origin-[0] left-6 peer-placeholder-shown:scale-100 
                 peer-placeholder-shown:-translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-3
                 ${props.errors? 'text-rose-500' : 'text-headline'}
-                ${props.prefix ? 'left-9' : 'left-4'} 
+                ${props.iconPrefix? 'left-9' : 'left-4'} 
                 `} 
                 htmlFor={props.id} id={props.label}>
                     {props.label}

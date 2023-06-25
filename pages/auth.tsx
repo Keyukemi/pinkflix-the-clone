@@ -6,7 +6,8 @@ import { useRouter } from "next/router";
 
 import {FcGoogle} from 'react-icons/fc'
 import Image from "next/image";
-import Mdemail from 'react-icons/md';
+import {MdEmail, MdPassword} from 'react-icons/md';
+import {BsFillPersonFill} from 'react-icons/bs';
 
 
 const Auth = () => {
@@ -69,9 +70,9 @@ const Auth = () => {
                                     type="username"
                                     onChange={(ev: any)=>setNameValue(ev.target.value)}
                                     value={name}
-                                    // prefix={()=>{
-                                    //     return <Mdemail size={20} className="text-headline absolute top-5 left-2" />
-                                    // }}
+                                    iconPrefix={()=> {
+                                     return <BsFillPersonFill size={20} className="text-headline absolute top-5 left-2" />
+                                    }}
                                 />
                             )}
 
@@ -81,9 +82,9 @@ const Auth = () => {
                                 type="email"
                                 onChange={(ev: any)=>setEmailValue(ev.target.value)}
                                 value={email}
-                                // prefix={()=>{
-                                //     return <Mdemail size={20} className="text-headline absolute top-5 left-2" />
-                                // }}
+                                iconPrefix={()=>{
+                                    return <MdEmail size={20} className="text-headline absolute top-5 left-2" />
+                                }}
                             />
                             <Input
                                 label="Password"
@@ -91,9 +92,9 @@ const Auth = () => {
                                 type="password"
                                 onChange={(ev: any)=>setPasswordValue(ev.target.value)}
                                 value={password}
-                                // prefix={()=>{
-                                //     return <Mdemail size={20} className="text-headline absolute top-5 left-2" />
-                                // }}
+                                iconPrefix={()=>{
+                                    return <MdPassword size={20} className="text-headline absolute top-5 left-2" />
+                                }}
                             />
                         </div>
 
