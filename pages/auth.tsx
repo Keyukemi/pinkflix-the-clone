@@ -102,6 +102,15 @@ const Auth = () => {
                         className="bg-headline text-primary hover:bg-paragraph rounded-md mt-10 w-full py-3 transition">
                            {variant == 'login' ? 'Log in' :'Create Account'}
                         </button>
+                        
+                        <div className="flex flex-row gap-4 items-center mt-8 justify-center">
+                            <div onClick={()=>signIn('google', {callbackUrl: '/'})}
+                            className="h-10 w-10 bg-primary rounded-full flex items-center
+                             justify-center cursor-pointer hover:opacity-80 transition">
+                                <FcGoogle size={30}/>
+                            </div>
+                        </div>
+
                         <p className="text-paragraph mt-12 text-center">
                         {variant == 'login' ? 'New to PinkFlix?': 'Already have an account?'}
                             <span onClick={toggleVariant}
