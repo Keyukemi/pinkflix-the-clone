@@ -2,16 +2,15 @@ import Input from "@/components/Input";
 import axios from "axios";
 import { useCallback, useState } from "react";
 import {signIn} from 'next-auth/react'
-import { useRouter } from "next/router";
 
 import {FcGoogle} from 'react-icons/fc'
-import Image from "next/image";
 import {MdEmail, MdPassword} from 'react-icons/md';
 import {BsFillPersonFill} from 'react-icons/bs';
 
+import Image from "next/image";
+
 
 const Auth = () => {
-    const router = useRouter();
     const[email, setEmailValue]= useState("");
     const[name, setNameValue]= useState("");
     const[password, setPasswordValue]= useState("");
@@ -27,14 +26,12 @@ const Auth = () => {
             await signIn('credentials',{
                 email, 
                 password,
-                redirect: false,
-                callbackUrl:'/'
+                callbackUrl:'/profiles'
             });
-            router.push('/')
         } catch (error) {
             console.log(error)
         }
-    },[email, password, router])
+    },[email, password])
 
     const register = useCallback(async() => {
         try {
@@ -70,7 +67,7 @@ const Auth = () => {
                                     type="username"
                                     onChange={(ev: any)=>setNameValue(ev.target.value)}
                                     value={name}
-                                    iconPrefix={()=> {
+                                    iconprefix={()=> {
                                      return <BsFillPersonFill size={20} className="text-headline absolute top-5 left-2" />
                                     }}
                                 />
@@ -82,7 +79,7 @@ const Auth = () => {
                                 type="email"
                                 onChange={(ev: any)=>setEmailValue(ev.target.value)}
                                 value={email}
-                                iconPrefix={()=>{
+                                iconprefix={()=>{
                                     return <MdEmail size={20} className="text-headline absolute top-5 left-2" />
                                 }}
                             />
@@ -92,7 +89,7 @@ const Auth = () => {
                                 type="password"
                                 onChange={(ev: any)=>setPasswordValue(ev.target.value)}
                                 value={password}
-                                iconPrefix={()=>{
+                                iconprefix={()=>{
                                     return <MdPassword size={20} className="text-headline absolute top-5 left-2" />
                                 }}
                             />
@@ -104,14 +101,14 @@ const Auth = () => {
                         </button>
                         
                         <div className="flex flex-row gap-4 items-center mt-8 justify-center">
-                            <div onClick={()=>signIn('google', {callbackUrl: '/'})}
+                            <div onClick={()=>signIn('google', {callbackUrl: '/profiles'})}
                             className="h-10 w-10 bg-primary rounded-full flex items-center
                              justify-center cursor-pointer hover:opacity-80 transition">
                                 <FcGoogle size={30}/>
                             </div>
                         </div>
 
-                        <p className="text-paragraph mt-12 text-center">
+                        <p className="text-paragraph mt-4 text-center">
                         {variant == 'login' ? 'New to PinkFlix?': 'Already have an account?'}
                             <span onClick={toggleVariant}
                             className="text-primary ml-1 hover:underline cursor-pointer">
