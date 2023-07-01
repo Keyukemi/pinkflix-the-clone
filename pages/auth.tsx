@@ -6,11 +6,12 @@ import {signIn} from 'next-auth/react'
 import {FcGoogle} from 'react-icons/fc'
 import {MdEmail, MdPassword} from 'react-icons/md';
 import {BsFillPersonFill} from 'react-icons/bs';
+import { useRouter } from "next/router";
 
-import Image from "next/image";
 
 
 const Auth = () => {
+    const router = useRouter();
     const[email, setEmailValue]= useState("");
     const[name, setNameValue]= useState("");
     const[password, setPasswordValue]= useState("");
@@ -26,12 +27,14 @@ const Auth = () => {
             await signIn('credentials',{
                 email, 
                 password,
-                callbackUrl:'/profiles'
+                redirect: false,
+                callbackUrl:'/'
             });
+            router.push('/profiles');
         } catch (error) {
             console.log(error)
         }
-    },[email, password])
+    },[email, password, router])
 
     const register = useCallback(async() => {
         try {
