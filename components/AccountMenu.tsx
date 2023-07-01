@@ -1,5 +1,6 @@
 import React from "react";
 import { signOut } from "next-auth/react";
+import useCurrentUser from "@/hooks/useCurrentUser";
 
 interface AccountMenuProps{
     visible?:boolean;
@@ -8,6 +9,8 @@ interface AccountMenuProps{
 const AccountMenu: React.FC <AccountMenuProps> = ({
     visible
 }) => {
+    const {data} = useCurrentUser();
+
     if(!visible){
         return null;
     }
@@ -17,7 +20,7 @@ const AccountMenu: React.FC <AccountMenuProps> = ({
             <div className="flex flex-col gap-3">
                 <div className="group/item px-3 flex flex-row items-center w-full ">
                     <img src="/images/punkicon1.png" alt="Profile Image 1" className="w-8 rounded-md bg-primary" />
-                    <p className=" text-primary text-sm group-hover/item:underline m-2">Username</p>
+                    <p className=" text-primary text-sm group-hover/item:underline m-2">{data?.name}</p>
                 </div>
                 <hr className="bg-secondary border-0 h-px my-3 m-3"/>
                 <div onClick={()=>signOut()}
