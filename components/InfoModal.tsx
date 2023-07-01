@@ -4,6 +4,7 @@ import PlayButton from "./PlayButton";
 import FavoriteButton from "./FavoriteButton";
 import useInfoModal from "@/hooks/useInfoModal";
 import useMovie from "@/hooks/useMovie";
+import { BiSolidCategoryAlt, BiSolidHot, BiSolidTimeFive } from "react-icons/bi";
 
 interface InfoModalProps{
     visible?: boolean;
@@ -30,7 +31,7 @@ const InfoModal: React.FC <InfoModalProps> = ({visible, onClose}) => {
         return null
     }
     return ( 
-        <div className="z-50 transition duration-300 bg-headline opacity-90 flex
+        <div className="z-50 transition duration-300 bg-headline opacity-95 flex
         justify-center items-center fixed inset-0 overflow-x-hidden overflow-y-auto ">
             <div className="relative w-auto mx-auto max-w-3xl rounded-md overflow-hidden">
                 <div className={`${isVisible? 'scale-100': 'scale-0'} transform duration-300 relative
@@ -56,16 +57,21 @@ const InfoModal: React.FC <InfoModalProps> = ({visible, onClose}) => {
                         </div>
                     </div>
                     <div className="px-12 py-8">
-                        <p className="text-tertiary font-semibold text-lg">
+                        <p className="text-tertiary font-semibold text-lg flex flex-row items-center">
+                            <BiSolidHot/>
                             New
                         </p>
-                        <p className="text-primary text-lg">
+                        <p className="text-primary text-lg flex flex-row items-center">
+                        <BiSolidTimeFive/>
                             {data?.duration}
                         </p>
-                        <p className="text-primary text-lg">
+                            
+                        <p className="text-primary text-lg flex flex-row items-center">
+                            <BiSolidCategoryAlt/>
                             {data?.genre}
                         </p>
-                        <p className="text-primary text-lg">
+                        <p className="text-headline text-lg">
+
                             {data?.description}
                         </p>
                     </div>

@@ -7,7 +7,7 @@ import { useRouter } from "next/router";
 import useInfoModal from "@/hooks/useInfoModal";
 
 interface MovieCardProps{
-    data: Record<string, any>[];
+    data: Record<string, any>;
 }
 
 const MovieCard:React.FC<MovieCardProps> = ({

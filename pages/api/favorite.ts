@@ -3,19 +3,21 @@ import { without } from "lodash";
 import prismadb from "@/lib/prismadb"
 import serverAuth from "@/lib/serverAuth";
 
+
 export default async function handler(req:NextApiRequest, res:NextApiResponse){
     try {
         //Add to Favorites
         if (req.method === 'POST'){
-            const {currentUser} = await serverAuth(req);
+            const {currentUser} = await serverAuth(req, res);
             const {movieId} = req.body; 
+
             const existingMovie = await prismadb.movie.findUnique({
                 where:{
                     id: movieId,
                 }
             });
             if (!existingMovie){
-                throw new Error ('Invalid ID');
+                throw new Error ('The Movie is in favorites');
             }
             const user = await prismadb.user.update({
                 where:{
@@ -23,21 +25,22 @@ export default async function handler(req:NextApiRequest, res:NextApiResponse){
                 },
                 data:{
                     favoriteIds:{
-                        push:movieId,
+                        push: movieId,
                     }
                 }
             });
             return res.status(200).json(user);
         }
+         
         //Delete from favorites
         if (req.method === "DELETE"){
-            const {currentUser} = await serverAuth(req);
+            const {currentUser} = await serverAuth(req,res);
 
             const {movieId} = req.body;
 
             const existingMovie = await prismadb.movie.findUnique({
                 where:{
-                    id: movieId
+                    id: movieId,
                 }
             });
             if (!existingMovie){
@@ -50,16 +53,19 @@ export default async function handler(req:NextApiRequest, res:NextApiResponse){
                     email:currentUser.email || '',
                 },
                 data:{
-                    favoriteIds: updatedFavoriteIds
+                    favoriteIds: updatedFavoriteIds,
                 }
             });
 
             return res.status(200).json(updatedUser);
         }
+
         return res.status(405).end(); 
            
     } catch (error) {
         console.log(error);
-        return res.status(400).end();
+        return res.status(500).end();
     }
 }
+
+
