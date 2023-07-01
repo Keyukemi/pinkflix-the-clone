@@ -1,14 +1,31 @@
 import Input from "@/components/Input";
 import axios from "axios";
 import { useCallback, useState } from "react";
-import {signIn} from 'next-auth/react'
+import {signIn, getSession} from 'next-auth/react'
+import { useRouter } from "next/router";
+import { NextPageContext } from "next";
 
 import {FcGoogle} from 'react-icons/fc'
 import {MdEmail, MdPassword} from 'react-icons/md';
 import {BsFillPersonFill} from 'react-icons/bs';
-import { useRouter } from "next/router";
 
 
+export async function getServerSideProps(context:NextPageContext){
+    const session = await getSession(context);
+
+    if (session) {
+      return {
+        redirect: {
+          destination: '/',
+          permanent: false,
+        }
+      }
+    }
+  
+    return {
+      props: {}
+    }
+}
 
 const Auth = () => {
     const router = useRouter();
@@ -60,10 +77,10 @@ const Auth = () => {
                     <div className="bg-highlight px-16 py-16 self-center mt-2 lg:w-2/5 lg:max-w-md
                         rounded-md w-full ">
                         <h2 className="text-headline text-4xl mb-8 font-semibold">
-                           {variant == 'login' ? 'Sign In': 'Register'}
+                           {variant === 'login' ? 'Sign In': 'Register'}
                         </h2>
                         <div className="flex flex-col gap-4">
-                            {variant == 'register' && ( 
+                            {variant === 'register' && ( 
                                 <Input
                                     label="Username"
                                     id="username"
@@ -98,9 +115,9 @@ const Auth = () => {
                             />
                         </div>
 
-                        <button onClick={variant == 'login' ? login: register}
+                        <button onClick={variant === 'login' ? login: register}
                         className="bg-headline text-primary hover:bg-paragraph rounded-md mt-10 w-full py-3 transition">
-                           {variant == 'login' ? 'Log in' :'Create Account'}
+                           {variant === 'login' ? 'Log in' :'Create Account'}
                         </button>
                         
                         <div className="flex flex-row gap-4 items-center mt-8 justify-center">
@@ -112,10 +129,10 @@ const Auth = () => {
                         </div>
 
                         <p className="text-paragraph mt-4 text-center">
-                        {variant == 'login' ? 'New to PinkFlix?': 'Already have an account?'}
+                        {variant === 'login' ? 'New to PinkFlix?': 'Already have an account?'}
                             <span onClick={toggleVariant}
                             className="text-primary ml-1 hover:underline cursor-pointer">
-                                {variant == 'login' ? 'Create an account': 'Sign In here'}
+                                {variant === 'login' ? 'Create an account': 'Sign In here'}
                             </span>
                         </p>
                     </div>

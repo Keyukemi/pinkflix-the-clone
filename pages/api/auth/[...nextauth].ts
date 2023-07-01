@@ -8,7 +8,7 @@ import { PrismaAdapter } from "@next-auth/prisma-adapter";
 
 
 
-export const authOptions: AuthOptions = ({
+export const authOptions: AuthOptions = {
     providers:[
         GoogleProvider({
             clientId: process.env.GOOGLE_CLIENT_ID || '',
@@ -16,7 +16,7 @@ export const authOptions: AuthOptions = ({
         }),
         Credentials({
             id:'credentials',
-            name: 'credentials',
+            name: 'Credentials',
             credentials:{
                 email:{
                     label:'Email',
@@ -50,7 +50,7 @@ export const authOptions: AuthOptions = ({
     pages: {
         signIn:'/auth'
     },
-    debug: process.env.NODE_ENV == 'development',
+    debug: process.env.NODE_ENV === 'development',
     adapter: PrismaAdapter(prismadb),
     session:{
         strategy: 'jwt',
@@ -59,6 +59,6 @@ export const authOptions: AuthOptions = ({
         secret:process.env.NEXTAUTH_JWT_SECRET,
     },
     secret: process.env.NEXTAUTH_SECRET,
-});
+};
 
 export default NextAuth(authOptions);
