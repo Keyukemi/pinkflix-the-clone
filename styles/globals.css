@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 body{
-  @apply bg-headline h-full overflow-hidden;
+  @apply bg-headline h-full;
 }
 
 #__next{

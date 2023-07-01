@@ -3,8 +3,8 @@ import {isEmpty} from 'lodash'
 import MovieCard from "./MovieCard";
 
 interface MovieListProps{
-    title: string
-    data: Record <string, any>[]
+    title: string;
+    data: Record <string, any>[];
 }
 
 const MovieList: React.FC <MovieListProps> = ({data, title}) => {

@@ -35,7 +35,7 @@ const Navbar = () => {
     },[])
     return ( 
         <nav className="w-full fixed z-40">
-            <div className={`px-4 md:px-16 py-6 flex fle-row items-center transition 
+            <div className={`px-4 md:px-16 py-4 flex flex-row items-center transition 
             duration-500 ${showBackground? 'bg-headline bg-opacity-90' : ''} `}>
                 <img src="/images/PinkFlix(c).png" alt="PinkFlix Logo" className="h-8 lg:h-14" />
                 <div className="ml-8 flex-row hidden lg:flex gap-7">

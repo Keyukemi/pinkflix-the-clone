@@ -5,7 +5,7 @@ import useFavorites from "@/hooks/useFavorites";
 import { BsFillHeartFill, BsHeart } from "react-icons/bs";
 
 interface FavoriteButtonProps{
-    movieId: string;
+    movieId: string;  
 }
 
 const FavoriteButton: React.FC <FavoriteButtonProps> = ({movieId}) => {
@@ -13,11 +13,11 @@ const FavoriteButton: React.FC <FavoriteButtonProps> = ({movieId}) => {
     const {data: currentUser, mutate} = useCurrentUser();
 
     const isFavorite = useMemo (()=>{
-        const list = currentUser?.favoriteIds ||[];
+        const list = currentUser?.favoriteIds || [];
         return list.includes(movieId)
     }, [currentUser, movieId])
 
-    const toggleFavorites = useCallback(async() => {
+    const toggleFavorites = useCallback(async () => {
         let response;
 
         if (isFavorite){
@@ -30,7 +30,7 @@ const FavoriteButton: React.FC <FavoriteButtonProps> = ({movieId}) => {
             ...currentUser,
             favoriteIds: updatedFavoriteIds
         });
-        mutateFavorites()
+        mutateFavorites();
     },[movieId, isFavorite, currentUser, mutate, mutateFavorites])
 
     const Icon = isFavorite? BsFillHeartFill : BsHeart;
